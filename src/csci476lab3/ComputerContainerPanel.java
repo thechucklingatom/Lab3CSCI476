@@ -28,23 +28,10 @@ public class ComputerContainerPanel extends JPanel implements ButtonPanel.Contro
         this.setLayout(new GridLayout(50, 200, 1, 1));
         panelList = new ArrayList();
         for(int i = 0; i < 10000; i++){
-            panelList.add(new JPanel());
-            if(rand.nextBoolean()){
-                 panelList.get(i).setBackground(Color.BLACK);
-            }else{
-                 panelList.get(i).setBackground(Color.WHITE);
-            }
+            panelList.add(new ComputerPanel());
             panelList.get(i).setPreferredSize(new Dimension(10,10));
             this.add(panelList.get(i));
         }
-//        JPanel test = new JPanel();
-//        test.setBackground(Color.RED);
-//        test.setSize(10, 10);
-//        this.add(test);
-//        JPanel test1 = new JPanel();
-//        test1.setBackground(Color.BLACK);
-//        test1.setSize(10, 10);
-//        this.add(test1);
     }
 
     @Override
