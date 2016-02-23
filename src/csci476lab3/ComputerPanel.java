@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.JPanel;
 
 /**
@@ -17,10 +18,12 @@ import javax.swing.JPanel;
  */
 public class ComputerPanel extends JPanel implements ButtonPanel.Controller{
     
+    ArrayList<JPanel> panelList;
+    
     public ComputerPanel(){
         this.setSize(1280, 620);
         this.setLayout(new GridLayout(50, 200, 1, 1));
-        ArrayList<JPanel> panelList = new ArrayList();
+        panelList = new ArrayList();
         for(int i = 0; i < 10000; i++){
             panelList.add(new JPanel());
             switch(i%3){
@@ -59,7 +62,14 @@ public class ComputerPanel extends JPanel implements ButtonPanel.Controller{
 
     @Override
     public void resetWorm() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Random rand = new Random();
+        for(JPanel panel : panelList){
+            if(rand.nextBoolean()){
+                panel.setBackground(Color.BLACK);
+            }else{
+                panel.setBackground(Color.WHITE);
+            }
+        }
     }
     
 }
