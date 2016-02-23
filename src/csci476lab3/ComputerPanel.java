@@ -28,9 +28,9 @@ public class ComputerPanel extends JPanel{
         if(!infectable){
             this.setBackground(Color.WHITE);
         }else if(numOfInfections > 0 && numOfInfections < 2){
-            this.setBackground(Color.RED);
-        }else if(numOfInfections > 1){
             this.setBackground(Color.ORANGE);
+        }else if(numOfInfections > 1){
+            this.setBackground(Color.RED);
         }else{
             this.setBackground(Color.BLACK);
         }
