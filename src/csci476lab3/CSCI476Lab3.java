@@ -23,7 +23,7 @@ public class CSCI476Lab3 {
         jFrame.setLayout(new BorderLayout());
         jFrame.setSize(1280, 720);
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ComputerPanel computerPanel = new ComputerPanel();
+        ComputerContainerPanel computerPanel = new ComputerContainerPanel();
         jFrame.add(computerPanel, BorderLayout.NORTH);
         ButtonPanel buttonPanel = new ButtonPanel(computerPanel);
         jFrame.add(buttonPanel, BorderLayout.SOUTH);
