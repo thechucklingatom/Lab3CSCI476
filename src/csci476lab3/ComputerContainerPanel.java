@@ -8,21 +8,27 @@ package csci476lab3;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 /**
  *
  * @author thech_000
  */
-public class ComputerContainerPanel extends JPanel implements ButtonPanel.Controller{
+public class ComputerContainerPanel extends JPanel implements ButtonPanel.Controller, ActionListener{
     
-    ArrayList<JPanel> panelList;
+    boolean runSim;
+    ArrayList<ComputerPanel> panelList;
+    ArrayList<Integer> wormList;
     Random rand;
+    Timer timer;
     
     public ComputerContainerPanel(){
+        runSim = false;
         rand = new Random();
         this.setSize(1280, 620);
         this.setLayout(new GridLayout(50, 200, 1, 1));
@@ -32,11 +38,16 @@ public class ComputerContainerPanel extends JPanel implements ButtonPanel.Contro
             panelList.get(i).setPreferredSize(new Dimension(10,10));
             this.add(panelList.get(i));
         }
+        wormList = new ArrayList();
+        
+        timer = new Timer(20, this);
+        timer.setInitialDelay(190);
+        timer.start();
     }
 
     @Override
     public void runSimulation() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        runSim = true;        
     }
 
     @Override
@@ -46,14 +57,46 @@ public class ComputerContainerPanel extends JPanel implements ButtonPanel.Contro
 
     @Override
     public void resetWorm() {
+        runSim = false;
         rand = new Random();
-        for (JPanel panel : panelList) {
-            if(rand.nextBoolean()){
-                panel.setBackground(Color.BLACK);
-            }else{
-                panel.setBackground(Color.WHITE);
-            }
+        for(ComputerPanel panel : panelList){
+            panel.reset();
         }
     }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        runTheSim();
+        repaint();
+    }
     
+    private void runTheSim(){
+        if(runSim){
+            int nextInt;
+            nextInt = rand.nextInt(panelList.size());
+            panelList.get(nextInt).infectComputer();
+
+
+//        if(wormList.isEmpty()){
+            
+//            if(panelList.get(nextInt).infectComputer()){
+//                wormList.add(nextInt);
+//            }
+//            repaint();
+//        }else{
+//            ArrayList<Integer> holder = new ArrayList();
+//            for(Integer i : wormList){
+//                nextInt = rand.nextInt(panelList.size());
+//                if(panelList.get(nextInt).infectComputer()){
+//                    holder.add(nextInt);
+//                }
+//            }
+//            for(Integer i : holder){
+//                wormList.add(i);
+//            }
+//            holder.clear();
+//            repaint();
+//        }
+        }
+    }
 }
