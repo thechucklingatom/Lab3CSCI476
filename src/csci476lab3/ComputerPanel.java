@@ -14,9 +14,9 @@ import javax.swing.JPanel;
  * @author thech_000
  */
 public class ComputerPanel extends JPanel{
-    boolean infectable;
-    int numOfInfections;
-    Random rand;
+    private boolean infectable;
+    private int numOfInfections;
+    private Random rand;
     
     public ComputerPanel(){
         rand = new Random();
@@ -26,11 +26,11 @@ public class ComputerPanel extends JPanel{
     }
     
     private void setBackground(){
-        if(!infectable){
+        if(!isInfectable()){
             this.setBackground(Color.WHITE);
-        }else if(numOfInfections > 0 && numOfInfections < 2){
+        }else if(getNumOfInfections() > 0 && getNumOfInfections() < 2){
             this.setBackground(Color.ORANGE);
-        }else if(numOfInfections > 1){
+        }else if(getNumOfInfections() > 1){
             this.setBackground(Color.RED);
         }else{
             this.setBackground(Color.BLACK);
@@ -38,7 +38,7 @@ public class ComputerPanel extends JPanel{
     }
     
     public boolean infectComputer(){
-        if(infectable){
+        if(isInfectable()){
             numOfInfections++;
             setBackground();
             return true;
@@ -49,5 +49,19 @@ public class ComputerPanel extends JPanel{
     public void reset(){
         numOfInfections = 0;
         setBackground();
+    }
+
+    /**
+     * @return the infectable
+     */
+    public boolean isInfectable() {
+        return infectable;
+    }
+
+    /**
+     * @return the numOfInfections
+     */
+    public int getNumOfInfections() {
+        return numOfInfections;
     }
 }
