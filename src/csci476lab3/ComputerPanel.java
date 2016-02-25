@@ -21,6 +21,7 @@ public class ComputerPanel extends JPanel{
     public ComputerPanel(){
         rand = new Random();
         infectable = rand.nextBoolean();
+        numOfInfections = 0;
         setBackground();
     }
     
@@ -36,4 +37,17 @@ public class ComputerPanel extends JPanel{
         }
     }
     
+    public boolean infectComputer(){
+        if(infectable){
+            numOfInfections++;
+            setBackground();
+            return true;
+        }
+        return false;
+    }    
+    
+    public void reset(){
+        numOfInfections = 0;
+        setBackground();
+    }
 }
