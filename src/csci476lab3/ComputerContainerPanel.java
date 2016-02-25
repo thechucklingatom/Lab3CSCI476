@@ -40,8 +40,8 @@ public class ComputerContainerPanel extends JPanel implements ButtonPanel.Contro
         }
         wormList = new ArrayList();
         
-        timer = new Timer(20, this);
-        timer.setInitialDelay(190);
+        timer = new Timer(1000, this);
+        timer.setInitialDelay(1000);
         timer.start();
     }
 
@@ -62,6 +62,7 @@ public class ComputerContainerPanel extends JPanel implements ButtonPanel.Contro
         for(ComputerPanel panel : panelList){
             panel.reset();
         }
+        wormList.clear();
     }
 
     @Override
@@ -74,29 +75,35 @@ public class ComputerContainerPanel extends JPanel implements ButtonPanel.Contro
         if(runSim){
             int nextInt;
             nextInt = rand.nextInt(panelList.size());
-            panelList.get(nextInt).infectComputer();
-
-
-//        if(wormList.isEmpty()){
+            //panelList.get(nextInt).infectComputer();
+            if(wormList.isEmpty()){
             
-//            if(panelList.get(nextInt).infectComputer()){
-//                wormList.add(nextInt);
-//            }
-//            repaint();
-//        }else{
-//            ArrayList<Integer> holder = new ArrayList();
-//            for(Integer i : wormList){
-//                nextInt = rand.nextInt(panelList.size());
-//                if(panelList.get(nextInt).infectComputer()){
-//                    holder.add(nextInt);
-//                }
-//            }
-//            for(Integer i : holder){
-//                wormList.add(i);
-//            }
-//            holder.clear();
-//            repaint();
-//        }
+                if(panelList.get(nextInt).infectComputer()){
+                    wormList.add(nextInt);
+                }
+                repaint();
+            }else{
+                ArrayList<Integer> holder = new ArrayList();
+                for(Integer i : wormList){
+                    nextInt = rand.nextInt(panelList.size());
+                    if(panelList.get(nextInt).infectComputer()){
+                        holder.add(nextInt);
+                    }
+                }
+                for(Integer i : holder){
+                    wormList.add(i);
+                }
+                holder.clear();
+            } 
+            
+            for(ComputerPanel panel : panelList){
+                if(panel.isInfectable() && panel.getNumOfInfections() > 1 || !panel.isInfectable()){
+                    runSim = false;
+                }else{
+                    runSim = true;
+                    break;
+                }
+            }
         }
     }
 }
