@@ -5,7 +5,6 @@
  */
 package csci476lab3;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -24,6 +23,7 @@ public class ComputerContainerPanel extends JPanel implements ButtonPanel.Contro
     
     boolean runSim;
     int howManyInfectTries;
+    float probability;
     ArrayList<ComputerPanel> panelList;
     ArrayList<Integer> wormList;
     Random rand;
