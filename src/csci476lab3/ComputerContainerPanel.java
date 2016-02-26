@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -22,6 +23,7 @@ import javax.swing.Timer;
 public class ComputerContainerPanel extends JPanel implements ButtonPanel.Controller, ActionListener{
     
     boolean runSim;
+    int howManyInfectTries;
     ArrayList<ComputerPanel> panelList;
     ArrayList<Integer> wormList;
     Random rand;
@@ -29,6 +31,7 @@ public class ComputerContainerPanel extends JPanel implements ButtonPanel.Contro
     
     public ComputerContainerPanel(){
         runSim = false;
+        howManyInfectTries = 1;
         rand = new Random();
         this.setSize(1280, 620);
         this.setLayout(new GridLayout(50, 200, 1, 1));
@@ -52,7 +55,7 @@ public class ComputerContainerPanel extends JPanel implements ButtonPanel.Contro
 
     @Override
     public void updateValues() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        howManyInfectTries = Integer.parseInt(JOptionPane.showInputDialog(""));
     }
 
     @Override
@@ -84,15 +87,30 @@ public class ComputerContainerPanel extends JPanel implements ButtonPanel.Contro
                 repaint();
             }else{
                 ArrayList<Integer> holder = new ArrayList();
+                ArrayList<Integer> removal = new ArrayList();
                 for(Integer i : wormList){
-                    nextInt = rand.nextInt(panelList.size());
-                    if(panelList.get(nextInt).infectComputer()){
-                        holder.add(nextInt);
+                    for(int iter = 0; iter < howManyInfectTries; iter++){
+                        nextInt = rand.nextInt(panelList.size());
+                        if(panelList.get(nextInt).infectComputer()){
+                            holder.add(nextInt);
+                        }else{
+                            removal.add(i);
+                        }
                     }
                 }
                 for(Integer i : holder){
                     wormList.add(i);
                 }
+                
+                for(Integer i : removal){
+                    wormList.remove(i);
+                }
+                if(wormList.isEmpty()){
+                    System.out.println("ded");
+                    JOptionPane.showMessageDialog(this, "The worm died out.");
+                    runSim = false;
+                }
+                removal.clear();
                 holder.clear();
             } 
             
