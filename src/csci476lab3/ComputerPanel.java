@@ -41,7 +41,7 @@ public class ComputerPanel extends JPanel{
         if(isInfectable()){
             numOfInfections++;
             setBackground();
-            return true;
+            return numOfInfections < 2;
         }
         return false;
     }    
