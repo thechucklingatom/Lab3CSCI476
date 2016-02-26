@@ -55,7 +55,16 @@ public class ComputerContainerPanel extends JPanel implements ButtonPanel.Contro
 
     @Override
     public void updateValues() {
-        howManyInfectTries = Integer.parseInt(JOptionPane.showInputDialog(""));
+        howManyInfectTries = Integer.parseInt(
+                JOptionPane.showInputDialog("Please enter how many computers "
+                        + "you want the worm to try to infect."));
+        probability = Float.parseFloat(
+                JOptionPane.showInputDialog("Please enter the probability of "
+                        + "reinfection. 0 < p < 1"));
+        
+        for(ComputerPanel panel : panelList){
+            panel.setProbabilityOfReinfection(probability);
+        }
     }
 
     @Override
@@ -109,17 +118,41 @@ public class ComputerContainerPanel extends JPanel implements ButtonPanel.Contro
                     System.out.println("ded");
                     JOptionPane.showMessageDialog(this, "The worm died out.");
                     runSim = false;
+                    int uninfectedCounter = 0;
+                    int infectedOnceCounter = 0;
+                    int infectedManyCounter = 0;
+                    int mostInfected = 0;
+                    for(ComputerPanel panel : panelList){
+                        if(panel.getNumOfInfections() == 0){
+                            uninfectedCounter++;
+                        }else if(panel.getNumOfInfections() == 1){
+                            infectedOnceCounter++;
+                            mostInfected = mostInfected < 1 ? 1 : mostInfected;
+                        }else{
+                            infectedManyCounter++;
+                            mostInfected = 
+                                    mostInfected < panel.getNumOfInfections() ? 
+                                    panel.getNumOfInfections() : mostInfected;
+                        }
+                    }
                 }
                 removal.clear();
                 holder.clear();
             } 
             
-            for(ComputerPanel panel : panelList){
-                if(panel.isInfectable() && panel.getNumOfInfections() > 1 || !panel.isInfectable()){
-                    runSim = false;
-                }else{
-                    runSim = true;
-                    break;
+            if(runSim){
+                for(ComputerPanel panel : panelList){
+                    if(panel.isInfectable() && panel.getNumOfInfections() > 1 || !panel.isInfectable()){
+                        runSim = false;
+                    }else{
+                        runSim = true;
+                        break;
+                    }
+                }
+                
+                if(!runSim){
+                    JOptionPane.showMessageDialog(this, "The Worm infected all"
+                            + " infectable computers at least twice!");
                 }
             }
         }

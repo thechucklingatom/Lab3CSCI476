@@ -14,14 +14,16 @@ import javax.swing.JPanel;
  * @author thech_000
  */
 public class ComputerPanel extends JPanel{
-    private boolean infectable;
+    private final boolean infectable;
     private int numOfInfections;
-    private Random rand;
+    private float probabilityOfReinfection;
+    private final Random rand;
     
     public ComputerPanel(){
         rand = new Random();
         infectable = rand.nextBoolean();
         numOfInfections = 0;
+        probabilityOfReinfection = 1;
         setBackground();
     }
     
@@ -38,13 +40,24 @@ public class ComputerPanel extends JPanel{
     }
     
     public boolean infectComputer(){
-        if(isInfectable()){
+        if(isInfectable() && numOfInfections == 0){
             numOfInfections++;
             setBackground();
-            return numOfInfections < 2;
+            return true;
+        }else if(isInfectable() && numOfInfections >= 0){
+            return reInfectComputer();
         }
         return false;
     }    
+    
+    public boolean reInfectComputer(){
+        if(rand.nextFloat() <= probabilityOfReinfection){
+            numOfInfections++;
+            setBackground();
+            return true;
+        }
+        return false;
+    }
     
     public void reset(){
         numOfInfections = 0;
@@ -63,5 +76,12 @@ public class ComputerPanel extends JPanel{
      */
     public int getNumOfInfections() {
         return numOfInfections;
+    }
+
+    /**
+     * @param probabilityOfReinfection the probabilityOfReinfection to set
+     */
+    public void setProbabilityOfReinfection(float probabilityOfReinfection) {
+        this.probabilityOfReinfection = probabilityOfReinfection;
     }
 }
