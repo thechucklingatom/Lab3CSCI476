@@ -123,7 +123,7 @@ public class ComputerContainerPanel extends JPanel implements ButtonPanel.Contro
                     int infectedManyCounter = 0;
                     int mostInfected = 0;
                     for(ComputerPanel panel : panelList){
-                        if(panel.getNumOfInfections() == 0 && panel.isInfectable()){
+                        if(panel.isInfectable() && panel.getNumOfInfections() == 0){
                             uninfectedCounter++;
                         }else if(panel.getNumOfInfections() == 1){
                             infectedOnceCounter++;
