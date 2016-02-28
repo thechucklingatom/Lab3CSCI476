@@ -123,18 +123,24 @@ public class ComputerContainerPanel extends JPanel implements ButtonPanel.Contro
                     int infectedManyCounter = 0;
                     int mostInfected = 0;
                     for(ComputerPanel panel : panelList){
-                        if(panel.getNumOfInfections() == 0){
+                        if(panel.getNumOfInfections() == 0 && panel.isInfectable()){
                             uninfectedCounter++;
                         }else if(panel.getNumOfInfections() == 1){
                             infectedOnceCounter++;
                             mostInfected = mostInfected < 1 ? 1 : mostInfected;
-                        }else{
+                        }else if(panel.getNumOfInfections() > 1){
                             infectedManyCounter++;
                             mostInfected = 
                                     mostInfected < panel.getNumOfInfections() ? 
                                     panel.getNumOfInfections() : mostInfected;
                         }
                     }
+                    
+                    JOptionPane.showMessageDialog(this, "There were "
+                            + uninfectedCounter + " uninfected machines. " + 
+                            infectedOnceCounter + " infected once machines. " +
+                            infectedManyCounter + " machines infected more than"
+                            + " once.");
                 }
                 removal.clear();
                 holder.clear();
